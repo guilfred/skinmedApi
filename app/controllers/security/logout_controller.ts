@@ -4,6 +4,6 @@ export default class LogoutController {
   async logout({ auth, response }: HttpContext) {
     await auth.use('api').logout()
 
-    return response.status(200).send('Deconnection du CRM !')
+    return response.status(200).json({ message: 'Deconnection du CRM !' })
   }
 }
