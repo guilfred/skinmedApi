@@ -6,7 +6,7 @@ export default defineConfig({
   age: '1h',
   enabled: true,
   cookieName: 'adonis-session',
-  clearWithBrowser: false,
+  clearWithBrowser: true,
 
   cookie: {
     path: '/',
