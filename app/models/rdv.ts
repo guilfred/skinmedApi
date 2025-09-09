@@ -1,8 +1,9 @@
+import Avoir from '#models/avoir'
 import Client from '#models/client'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import User from '#models/user'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
-import User from './user.js'
 
 export type RdvType = 'contact' | 'installation'
 
@@ -51,6 +52,11 @@ export default class Rdv extends BaseModel {
 
   @belongsTo(() => User, { foreignKey: 'agentId' })
   declare agent: BelongsTo<typeof User>
+
+  @hasMany(() => Avoir, {
+    foreignKey: 'rdvId',
+  })
+  declare avoirs: HasMany<typeof Avoir>
 
   constructor() {
     super()

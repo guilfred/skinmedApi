@@ -23,8 +23,9 @@ export default class AvoirController {
     const { params } = await request.validateUsing(getClientIDFromAvoirValidator)
     const avoirs = await Avoir.query()
       .whereHas('client', (clientQuery) => {
-        return clientQuery.where('id', params.clientId)
+        return clientQuery.where('client.id', params.clientId)
       })
+      .andWhere('id', params.avoirId)
       .preload('client')
 
     return avoirs.map((a: Avoir) => this.presenter.toJSON(a))
@@ -35,7 +36,7 @@ export default class AvoirController {
     if (!user) {
       return response.status(401).send('Requires authentication')
     }
-    const { qte, clientId, tva, libelle, at, unit_price } =
+    const { qte, clientId, tva, libelle, at, unit_price, rdvId } =
       await request.validateUsing(createAvoirValidator)
 
     const avoir = new Avoir()
@@ -47,6 +48,7 @@ export default class AvoirController {
     avoir.tva = tva
     avoir.at = DateTime.fromJSDate(at)
     avoir.total = getTotalAvoir(qte)
+    avoir.rdvId = rdvId
     await avoir.save()
     await avoir.load('client')
 

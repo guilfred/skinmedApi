@@ -14,7 +14,7 @@ export default defineConfig({
     secure: app.inProduction,
     sameSite: 'lax',
   },
-  store: (env.get('SESSION_DRIVER') as 'cookie' | 'memory') || 'memory',
+  store: (env.get('SESSION_DRIVER') as 'cookie' | 'memory') || 'cookie',
   stores: {
     cookie: stores.cookie(),
   },

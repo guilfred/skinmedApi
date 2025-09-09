@@ -1,3 +1,4 @@
+import Avoir from '#models/avoir'
 import Rdv from '#models/rdv'
 
 export class RdvDto {
@@ -40,6 +41,30 @@ export class RdvDto {
         phone: rdv.agent.phone || null,
       },
       isArchived: rdv.isArchived,
+      avoirs: rdv.avoirs
+        ? rdv.avoirs.map((avoir: Avoir) => {
+            return {
+              id: avoir.id,
+              qteBilled: avoir.qteBilled,
+              qteRealized: avoir.qteRealized,
+              createdAt: avoir.createdAt,
+              at: avoir.at,
+              rdvId: avoir.rdvId,
+              tva: avoir.tva,
+              libelle: avoir.libelle,
+              total: avoir.total,
+              unitPrice: avoir.unitPrice,
+              client: avoir.client
+                ? {
+                    id: avoir.client.id,
+                    fullname: `${avoir.client.firstname} ${avoir.client.name}`,
+                    rs: avoir.client.rs,
+                    ref: avoir.client.matricule,
+                  }
+                : [],
+            }
+          })
+        : null,
     }
   }
 }

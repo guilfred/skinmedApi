@@ -8,6 +8,7 @@ export class AvoirDto {
       qteRealized: avoir.qteRealized,
       createdAt: avoir.createdAt,
       at: avoir.at,
+      rdvId: avoir.rdvId,
       tva: avoir.tva,
       libelle: avoir.libelle,
       total: avoir.total,

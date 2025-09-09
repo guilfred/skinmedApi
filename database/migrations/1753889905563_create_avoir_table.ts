@@ -12,6 +12,7 @@ export default class extends BaseSchema {
       table.decimal('tva').notNullable()
       table.string('libelle').notNullable()
       table.integer('client_id').unsigned().references('clients.id').onDelete('CASCADE')
+      table.integer('rdv_id').unsigned().references('rdvs.id').onDelete('CASCADE')
       table.decimal('unit_price').notNullable()
       table.decimal('total').notNullable()
       table.integer('qte_realized').notNullable()
