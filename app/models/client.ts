@@ -65,6 +65,15 @@ export default class Client extends BaseModel {
   declare codePostal: string | null
 
   @column()
+  declare de: string | null
+
+  @column()
+  declare fsp: string | null
+
+  @column()
+  declare department: number
+
+  @column()
   declare address: string | null
 
   @column()
