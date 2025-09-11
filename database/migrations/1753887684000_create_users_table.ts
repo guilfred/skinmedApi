@@ -26,6 +26,7 @@ export default class extends BaseSchema {
       table.string('ville').nullable()
       table.string('address').nullable()
       table.string('code_postal').nullable()
+      table.string('department', 2).nullable()
       table.string('phone').nullable()
       table.text('description').nullable()
       table.json('avatar').nullable()

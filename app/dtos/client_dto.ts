@@ -26,6 +26,8 @@ export class ClientDto {
       address: client.address || null,
       amount: client.amount || null,
       installAt: client.installAt || null,
+      fsp: client.fsp || null,
+      de: client.de || null,
       eSign: client.eSign,
       files: client.files ? client.files.map((file) => file.url) : [],
       financeur: client.financeur

@@ -135,6 +135,7 @@ export default class RdvClientController {
     clientInstance.firstname = client.firstname
     clientInstance.rs = client.rs
     clientInstance.codePostal = client.cp
+    clientInstance.department = client.department
     clientInstance.phonePortable = client.phonePortable
     clientInstance.phoneFix = client.phoneFix
     clientInstance.address = client.address

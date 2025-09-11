@@ -12,6 +12,8 @@ export const EditClientContratDataValidator = vine.compile(
   vine.object({
     siren: vine.string().trim().nullable(),
     rpps: vine.string().trim().nullable(),
+    de: vine.string().trim().nullable(),
+    fsp: vine.string().trim().nullable(),
     amount: vine.number().positive().nullable(),
     numBonCommande: vine.string().trim().nullable(),
     matricule: vine.string().trim().nullable(),
@@ -47,6 +49,7 @@ export const EditPreClientValidator = vine.compile(
       .nullable(),
     birthPlace: vine.string().trim().nullable(),
     codePostal: vine.string().trim().fixedLength(5).regex(/^\d+$/).nullable().optional(),
+    department: vine.string().trim().fixedLength(2).regex(/^\d+$/),
   })
 )
 
@@ -61,6 +64,7 @@ export const AddClientValidator = vine.compile(
     phoneFix: vine.string().trim().nullable(),
     phonePortable: vine.string().trim().nullable(),
     codePostal: vine.string().trim().fixedLength(5).regex(/^\d+$/).nullable().optional(),
+    department: vine.string().trim().fixedLength(2).regex(/^\d+$/),
     interested: vine.boolean(),
   })
 )

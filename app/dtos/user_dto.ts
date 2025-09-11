@@ -15,6 +15,7 @@ export class UserDto {
       phone: user.phone || '',
       ville: user.ville || '',
       codePostal: user.codePostal || '',
+      department: user.department || '',
       address: user.address || '',
       description: user.description || '',
     }

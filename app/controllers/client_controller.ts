@@ -78,6 +78,8 @@ export default class ClientController {
       eSign,
       financeurId,
       matricule,
+      de,
+      fsp,
     } = await request.validateUsing(EditClientContratDataValidator)
 
     await client
@@ -85,6 +87,8 @@ export default class ClientController {
         siren,
         rpps,
         amount,
+        de,
+        fsp,
         numBonCommande,
         signAt: signAt ? DateTime.fromJSDate(signAt) : null,
         installAt: installAt ? DateTime.fromJSDate(installAt) : null,
@@ -120,7 +124,7 @@ export default class ClientController {
       codePostal,
       birthPlace,
       birthAt,
-      //financeurId,
+      department,
     } = await request.validateUsing(EditPreClientValidator)
 
     await client
@@ -128,6 +132,7 @@ export default class ClientController {
         name: nom,
         firstname,
         rs,
+        department,
         ville,
         address,
         phoneFix,
@@ -159,6 +164,7 @@ export default class ClientController {
       phoneFix,
       phonePortable,
       interested,
+      department,
       rs,
     } = await request.validateUsing(AddClientValidator)
 
@@ -172,6 +178,7 @@ export default class ClientController {
     client.phoneFix = phoneFix
     client.phonePortable = phonePortable
     client.interested = interested
+    client.department = department
     client.rs = rs
     await client.save()
 

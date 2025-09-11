@@ -10,7 +10,7 @@ export default class extends BaseSchema {
       table.timestamp('updated_at')
       table.string('num_bon_commande').nullable()
       table.string('matricule').nullable()
-      table.smallint('department')
+      table.string('department', 2)
       table.string('de').nullable()
       table.string('fsp').nullable()
       table.string('name').notNullable()

@@ -15,6 +15,7 @@ export default class UserSeeder extends BaseSeeder {
         description: 'Compte Super admin',
         ville: 'Abidjan',
         codePostal: null,
+        department: '10',
         address: 'Test jjjdeooo',
       },
       {
@@ -28,6 +29,7 @@ export default class UserSeeder extends BaseSeeder {
         description: 'Compte agent',
         ville: 'Paris',
         codePostal: '10380',
+        department: '10',
         address: 'Test jjjdeooo',
       },
       {
@@ -41,6 +43,7 @@ export default class UserSeeder extends BaseSeeder {
         description: 'Compte agent',
         ville: 'Nanterrre',
         codePostal: '30090',
+        department: '30',
         address: 'Test Nanterrre',
       },
       {
@@ -54,6 +57,7 @@ export default class UserSeeder extends BaseSeeder {
         description: 'Compte agent',
         ville: 'Paris',
         codePostal: '56098',
+        department: '56',
         address: 'paris',
       },
       {
@@ -67,6 +71,7 @@ export default class UserSeeder extends BaseSeeder {
         description: 'Compte télévendeur',
         ville: 'Casablanca',
         codePostal: '20000',
+        department: '20',
         address: 'adreess test',
       },
       {
@@ -79,7 +84,8 @@ export default class UserSeeder extends BaseSeeder {
         phone: null,
         description: 'Compte Admin télévendeur',
         ville: 'Casablanca',
-        codePostal: '20000',
+        codePostal: '15000',
+        department: '15',
         address: 'adreess test',
       },
       {
@@ -93,6 +99,7 @@ export default class UserSeeder extends BaseSeeder {
         description: 'Compte Admin',
         ville: 'Paris',
         codePostal: '51292',
+        department: '51',
         address: 'adreess test',
       },
       {
@@ -106,6 +113,7 @@ export default class UserSeeder extends BaseSeeder {
         description: 'Compte Utilisateur',
         ville: 'Paris',
         codePostal: '41298',
+        department: '41',
         address: 'adreess test',
       },
     ])

@@ -71,7 +71,7 @@ export default class Client extends BaseModel {
   declare fsp: string | null
 
   @column()
-  declare department: number
+  declare department: string
 
   @column()
   declare address: string | null

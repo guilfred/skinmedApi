@@ -69,6 +69,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare codePostal: string | null
 
   @column()
+  declare department: string | null
+
+  @column()
   declare address: string | null
 
   @column({ columnName: 'is_enabled' })
