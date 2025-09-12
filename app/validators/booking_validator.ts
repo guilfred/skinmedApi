@@ -56,3 +56,14 @@ export const DetachFromDropBookingValidator = vine.compile(
     agentId: vine.number().withoutDecimals().positive().optional(),
   })
 )
+
+export const UnlikeBookingValidator = vine.compile(
+  vine.object({
+    start: vine.number().withoutDecimals().positive(),
+    end: vine.number().withoutDecimals().positive(),
+    at: vine.date({
+      formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+    }),
+    agentId: vine.number().withoutDecimals().positive().optional(),
+  })
+)

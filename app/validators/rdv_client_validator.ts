@@ -54,6 +54,9 @@ export const UpdateCrenauAndProfileAgentValidator = vine.compile(
     creneau: vine.string().trim(),
     agentId: vine.number().withoutDecimals().positive(),
     isArchived: vine.boolean(),
+    at: vine.date({
+      formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+    }),
   })
 )
 

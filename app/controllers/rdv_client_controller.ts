@@ -81,10 +81,17 @@ export default class RdvClientController {
       .preload('user')
       .firstOrFail()
 
-    const { agentId, creneau, isArchived } = await request.validateUsing(
+    const { agentId, creneau, isArchived, at } = await request.validateUsing(
       UpdateCrenauAndProfileAgentValidator
     )
-    await rdv.merge({ creneau: creneau, agentId: agentId, isArchived: isArchived }).save()
+    await rdv
+      .merge({
+        creneau: creneau,
+        agentId: agentId,
+        isArchived: isArchived,
+        rdvAt: DateTime.fromJSDate(at),
+      })
+      .save()
 
     if (rdv.isArchived) {
       const client = await Client.query()

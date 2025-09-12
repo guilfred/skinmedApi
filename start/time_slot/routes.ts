@@ -9,6 +9,7 @@ export const TimeSlotRoutes = () => {
       router.post('', [BookingController, 'store'])
       router.post('detach', [BookingController, 'detach'])
       router.post('detach_from', [BookingController, 'detachFromDrop'])
+      router.post('unlike', [BookingController, 'unlike'])
     })
     .prefix('/api/time_slots')
     .middleware(middleware.auth())

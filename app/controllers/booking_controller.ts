@@ -5,6 +5,7 @@ import {
   CreateBookingValidator,
   DetachBookingValidator,
   DetachFromDropBookingValidator,
+  UnlikeBookingValidator,
 } from '#validators/booking_validator'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -130,5 +131,24 @@ export default class BookingController {
     await timeSlot.save()
 
     return response.status(200).send('Ce créneau est libre !')
+  }
+
+  async unlike({ auth, response, request }: HttpContext) {
+    const user = auth.user
+    if (!user) {
+      return response.status(401).send('Requires authentication')
+    }
+    const { at, start, end, agentId } = await request.validateUsing(UnlikeBookingValidator)
+
+    const booking = await TimeSlot.query()
+      .where('dateAt', at)
+      .andWhere('start_time', start)
+      .andWhere('end_time', end)
+      .andWhere('user_id', agentId || user.id)
+      .firstOrFail()
+
+    await booking.delete()
+
+    return response.status(200).json({ message: 'Ce créneau est libre !' })
   }
 }
