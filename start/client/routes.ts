@@ -6,8 +6,7 @@ const ClientController = () => import('#controllers/client_controller')
 export const ClientRoutes = () => {
   router
     .group(() => {
-      router.get('interested', [ClientController, 'getClientsInteresed'])
-      router.get('not_interested', [ClientController, 'getClientsNotInteresed'])
+      router.get('', [ClientController, 'getClients'])
       router.get('/:id', [ClientController, 'view'])
       router.put('/edit_contract/:id', [ClientController, 'editContract'])
       router.put('/edit_information/:id', [ClientController, 'editClientInformation'])

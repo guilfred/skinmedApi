@@ -16,22 +16,12 @@ import { ClientDto } from '../dtos/client_dto.js'
 export default class ClientController {
   constructor(protected presenter: ClientDto) {}
 
-  async getClientsInteresed({ response, auth }: HttpContext) {
+  async getClients({ response, auth }: HttpContext) {
     const user = auth.user
     if (!user) {
       return response.status(401).send('Requires authentication')
     }
-    const clients = await Client.query().where('interested', true)
-
-    return clients.map((c: Client) => this.presenter.toJSON(c))
-  }
-
-  async getClientsNotInteresed({ response, auth }: HttpContext) {
-    const user = auth.user
-    if (!user) {
-      return response.status(401).send('Requires authentication')
-    }
-    const clients = await Client.query().where('interested', false)
+    const clients = await Client.all()
 
     return clients.map((c: Client) => this.presenter.toJSON(c))
   }
