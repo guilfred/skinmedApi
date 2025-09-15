@@ -43,7 +43,7 @@ export default class RdvAgentController {
     if (!user) {
       return response.status(401).send('Requires authentication')
     }
-    const rdvs = await this.repository.getRdvsByCurrentAgent('contact', user.id)
+    const rdvs = await this.repository.getRdvsByCurrentAgent(user.id)
 
     return rdvs.map((rdv) => this.presenter.toJSON(rdv))
   }
@@ -234,5 +234,14 @@ export default class RdvAgentController {
     await rdv.merge({ state: state }).save()
 
     return response.status(200).json(this.presenter.toJSON(rdv))
+  }
+
+  async precontactuel({ auth, request, response }: HttpContext) {
+    const user = auth.user
+    if (!user) {
+      return response.status(401).send('Requires authentication')
+    }
+    const { params } = await request.validateUsing(CheckRdvIDValidator)
+    const rdv = await Rdv.findOrFail(params.id)
   }
 }

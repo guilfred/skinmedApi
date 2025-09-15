@@ -93,3 +93,12 @@ export const createRdvFromClientAgentAttachValidator = vine.compile(
     agentId: vine.number().withoutDecimals().positive(),
   })
 )
+
+export const validateRdvInstallationValidator = vine.compile(
+  vine.object({
+    signAt: vine.date({
+      formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+    }),
+    financeurId: vine.number().withoutDecimals().positive(),
+  })
+)

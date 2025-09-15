@@ -18,6 +18,7 @@ export class ClientDto {
       interested: client.interested,
       phoneFix: client.phoneFix || null,
       phonePortable: client.phonePortable || null,
+      department: client.department,
       rs: client.rs,
       siren: client.siren || null,
       rpps: client.rpps || null,

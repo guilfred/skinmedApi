@@ -29,10 +29,8 @@ export class RdvRepository {
       .preload('agent')
   }
 
-  public async getRdvsByCurrentAgent(type: RdvType, currentAgentID: number) {
+  public async getRdvsByCurrentAgent(currentAgentID: number) {
     return await Rdv.query()
-      .where('type', type)
-      .andWhere('isArchived', false)
       .andWhere('agent_id', currentAgentID)
       .whereHas('agent', (agentQuery) => {
         agentQuery.where('role', ROLE.AGENT)
