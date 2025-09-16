@@ -2,6 +2,7 @@ import Client from '#models/client'
 import {
   AddClientValidator,
   CheckClientIDValidator,
+  choiceLeaseurValidator,
   EditClientContratDataValidator,
   EditPreClientValidator,
   scanFilesClientValidator,
@@ -21,6 +22,20 @@ export default class ClientController {
     if (!user) {
       return response.status(401).send('Requires authentication')
     }
+
+    if (user.role === 'ROLE_AGENT') {
+      const clients = await Client.query()
+        .whereHas('rdvs', (rdvQuery) => {
+          rdvQuery.where('agentId', user.id)
+        })
+        .preload('rdvs', (rdvQuery) => {
+          rdvQuery.where('agentId', user.id).preload('agent') // ✅ AJOUT IMPORTANT : charge l'agent
+        })
+        .preload('financeur')
+
+      return clients.map((c: Client) => this.presenter.toJSON(c))
+    }
+
     const clients = await Client.all()
 
     return clients.map((c: Client) => this.presenter.toJSON(c))
@@ -32,17 +47,13 @@ export default class ClientController {
       return response.status(401).send('Requires authentication')
     }
     const { params } = await request.validateUsing(CheckClientIDValidator)
-
     const c = await Client.query()
       .where('id', params.id)
-      /*       .whereHas('rdvs', (rdvsQuery) => {
-        rdvsQuery.whereHas('agent', (agentQuery) => {
-          agentQuery.where('role', ROLE.AGENT) // filtre sur le rôle
-        })
-      }) */
       .preload('financeur')
       .preload('rdvs', (rdvsQuery) => {
-        rdvsQuery.preload('agent')
+        rdvsQuery
+          .where('agentId', user.id) // ✅ Filtre par agent connecté
+          .preload('agent') // Charge l'agent de chaque RDV
       })
       .firstOrFail()
 
@@ -185,6 +196,21 @@ export default class ClientController {
 
     const { files } = await request.validateUsing(scanFilesClientValidator)
     client.files = await attachmentManager.createFromFiles(files)
+    await client.save()
+
+    return response.status(200).json(this.presenter.toJSON(client))
+  }
+
+  async choiceLeaseur({ auth, request, response }: HttpContext) {
+    const user = auth.user
+    if (!user) {
+      return response.status(401).send('Requires authentication')
+    }
+    const { params } = await request.validateUsing(CheckClientIDValidator)
+    const client = await Client.query().where('id', params.id).firstOrFail()
+    const { financeurId, esign } = await request.validateUsing(choiceLeaseurValidator)
+    client.eSign = esign
+    client.financeurId = financeurId
     await client.save()
 
     return response.status(200).json(this.presenter.toJSON(client))

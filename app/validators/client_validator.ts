@@ -81,3 +81,10 @@ export const scanFilesClientValidator = vine.compile(
       .minLength(1), // Au moins 1 fichier requis
   })
 )
+
+export const choiceLeaseurValidator = vine.compile(
+  vine.object({
+    financeurId: vine.number().withoutDecimals().positive(),
+    esign: vine.boolean(),
+  })
+)

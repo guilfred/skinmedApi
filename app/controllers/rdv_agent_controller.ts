@@ -143,7 +143,6 @@ export default class RdvAgentController {
       return response.status(401).send('Requires authentication')
     }
     const rdvs = await Rdv.query()
-      .where('type', 'installation')
       .andWhere('agent_id', user.id)
       .preload('agent')
       .preload('user')
@@ -233,15 +232,10 @@ export default class RdvAgentController {
     const { state } = await request.validateUsing(updateStateValidator)
     await rdv.merge({ state: state }).save()
 
+    const client = rdv.client
+    client.signAt = DateTime.fromJSDate(new Date())
+    await client.save()
+
     return response.status(200).json(this.presenter.toJSON(rdv))
   }
-
-  /* async precontactuel({ auth, request, response }: HttpContext) {
-    const user = auth.user
-    if (!user) {
-      return response.status(401).send('Requires authentication')
-    }
-    const { params } = await request.validateUsing(CheckRdvIDValidator)
-    const rdv = await Rdv.findOrFail(params.id)
-  } */
 }

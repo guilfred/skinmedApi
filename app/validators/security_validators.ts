@@ -13,7 +13,7 @@ export const createAccountValidator = vine.compile(
 
 export const AuthenticationValidator = vine.compile(
   vine.object({
-    username: vine.string().email(),
+    username: vine.string().email().trim(),
     password: vine.string().trim(),
   })
 )

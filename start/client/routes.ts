@@ -12,6 +12,7 @@ export const ClientRoutes = () => {
       router.put('/edit_information/:id', [ClientController, 'editClientInformation'])
       router.post('', [ClientController, 'store'])
       router.put('/scan_files/:id', [ClientController, 'scanFiles'])
+      router.put('/choice_leaseurs/:id', [ClientController, 'choiceLeaseur'])
     })
     .prefix('/api/clients')
     .middleware(middleware.auth())
