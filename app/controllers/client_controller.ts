@@ -1,4 +1,5 @@
 import Client from '#models/client'
+import Financeur from '#models/financeur'
 import {
   AddClientValidator,
   CheckClientIDValidator,
@@ -47,13 +48,15 @@ export default class ClientController {
       return response.status(401).send('Requires authentication')
     }
     const { params } = await request.validateUsing(CheckClientIDValidator)
+
     const c = await Client.query()
       .where('id', params.id)
       .preload('financeur')
       .preload('rdvs', (rdvsQuery) => {
-        rdvsQuery
-          .where('agentId', user.id) // ✅ Filtre par agent connecté
-          .preload('agent') // Charge l'agent de chaque RDV
+        rdvsQuery.preload('agent')
+        if (user.role !== 'ROLE_ADMIN') {
+          rdvsQuery.where('agentId', user.id)
+        }
       })
       .firstOrFail()
 
@@ -209,8 +212,10 @@ export default class ClientController {
     const { params } = await request.validateUsing(CheckClientIDValidator)
     const client = await Client.query().where('id', params.id).firstOrFail()
     const { financeurId, esign } = await request.validateUsing(choiceLeaseurValidator)
+    const financeur = await Financeur.findOrFail(financeurId)
     client.eSign = esign
     client.financeurId = financeurId
+    client.amount = financeur.amount
     await client.save()
 
     return response.status(200).json(this.presenter.toJSON(client))

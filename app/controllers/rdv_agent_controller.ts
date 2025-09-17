@@ -105,6 +105,9 @@ export default class RdvAgentController {
     await rdvInstance.load('user')
     await rdvInstance.load('agent')
 
+    client.installAt = DateTime.fromJSDate(new Date())
+    await client.save()
+
     return response.status(201).json(this.presenter.toJSON(rdvInstance))
   }
 
@@ -132,6 +135,10 @@ export default class RdvAgentController {
         clientId: clientId,
       })
       .save()
+
+    const client = rdv.client
+    client.installAt = DateTime.fromJSDate(new Date())
+    await client.save()
 
     return response.status(200).json(this.presenter.toJSON(rdv))
   }
@@ -233,8 +240,11 @@ export default class RdvAgentController {
     await rdv.merge({ state: state }).save()
 
     const client = rdv.client
-    client.signAt = DateTime.fromJSDate(new Date())
-    await client.save()
+    // si c'est un rendez-vous d'installation
+    if (rdv.type === 'installation' && rdv.state) {
+      client.signAt = rdv.rdvAt
+      await client.save()
+    }
 
     return response.status(200).json(this.presenter.toJSON(rdv))
   }
