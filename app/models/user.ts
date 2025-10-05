@@ -7,6 +7,7 @@ import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { attachment } from '@jrmc/adonis-attachment'
 import type { Attachment } from '@jrmc/adonis-attachment/types/attachment'
 import { DateTime } from 'luxon'
+import Notification from './notification.js'
 import Rdv from './rdv.js'
 import TimeSlot from './time_slot.js'
 
@@ -97,6 +98,11 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @hasMany(() => TimeSlot)
   declare timeSlots: HasMany<typeof TimeSlot>
+
+  @hasMany(() => Notification, {
+    foreignKey: 'receiverUserId',
+  })
+  declare notifications: HasMany<typeof Notification>
 
   constructor() {
     super()

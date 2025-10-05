@@ -39,4 +39,16 @@ export class RdvRepository {
       .preload('user')
       .preload('agent')
   }
+
+  public async getRdvsByAgentId(agentID: number) {
+    return await Rdv.query()
+      .where('isArchived', false)
+      .andWhere('agent_id', agentID)
+      .whereHas('agent', (agentQuery) => {
+        agentQuery.where('role', ROLE.AGENT)
+      })
+      .preload('client')
+      .preload('user')
+      .preload('agent')
+  }
 }

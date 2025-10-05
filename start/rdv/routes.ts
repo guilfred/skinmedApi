@@ -30,6 +30,7 @@ export const RdvRoutes = () => {
       router.get('/view_installation/:id', [RdvAgentController, 'viewRdvAgentInstallation'])
       router.put('/update_states/:id', [RdvAgentController, 'updateStateRdv'])
       router.get('/current_agent', [RdvAgentController, 'getRdvByCurrentAgent'])
+      router.get('/by_agent/:agentID', [RdvAgentController, 'getRdvsByAgent'])
     })
     .prefix('/api/rdvs/rdv_agents')
     .middleware(middleware.auth())

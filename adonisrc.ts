@@ -56,6 +56,7 @@ export default defineConfig({
     () => import('@adonisjs/session/session_provider'),
     () => import('@adonisjs/drive/drive_provider'),
     () => import('@jrmc/adonis-attachment/attachment_provider'),
+    () => import('@adonisjs/transmit/transmit_provider')
   ],
 
   /*

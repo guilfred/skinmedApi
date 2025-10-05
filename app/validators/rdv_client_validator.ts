@@ -23,6 +23,14 @@ export const CheckRdvIDValidator = vine.compile(
   })
 )
 
+export const CheckAgentIDToRdvsValidator = vine.compile(
+  vine.object({
+    params: vine.object({
+      agentID: vine.number().withoutDecimals().positive(),
+    }),
+  })
+)
+
 export const SetCreneauValidator = vine.compile(
   vine.object({
     creneau: vine.string().trim(),

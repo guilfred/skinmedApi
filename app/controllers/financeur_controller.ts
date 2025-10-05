@@ -1,3 +1,4 @@
+import { NotificationCreatedEvent } from '#events/notification_event'
 import Financeur from '#models/financeur'
 import {
   CheckFinanceurIDValidator,
@@ -63,6 +64,12 @@ export default class FinanceurController {
     financeur.amount = amount
 
     await financeur.save()
+
+    NotificationCreatedEvent.dispatch(
+      { request, response, auth } as HttpContext,
+      'Modification du financeur',
+      `Financeur: ${financeur.libelle}`
+    )
 
     return response.status(200).json(this.presenter.toJSON(financeur))
   }

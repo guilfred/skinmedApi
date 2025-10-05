@@ -7,7 +7,11 @@ import {
   UpdateCrenauAndStateAgentValidator,
   UpdateCreneauValidator,
 } from '#validators/rdv_agent_validator'
-import { CheckRdvIDValidator, UpdateRdvAtValidator } from '#validators/rdv_client_validator'
+import {
+  CheckAgentIDToRdvsValidator,
+  CheckRdvIDValidator,
+  UpdateRdvAtValidator,
+} from '#validators/rdv_client_validator'
 import { updateStateValidator } from '#validators/security_validators'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -44,6 +48,19 @@ export default class RdvAgentController {
       return response.status(401).send('Requires authentication')
     }
     const rdvs = await this.repository.getRdvsByCurrentAgent(user.id)
+
+    return rdvs.map((rdv) => this.presenter.toJSON(rdv))
+  }
+
+  async getRdvsByAgent({ auth, response, request }: HttpContext) {
+    const user = auth.user
+    if (!user) {
+      return response.status(401).send('Requires authentication')
+    }
+
+    const { params } = await request.validateUsing(CheckAgentIDToRdvsValidator)
+
+    const rdvs = await this.repository.getRdvsByAgentId(params.agentID)
 
     return rdvs.map((rdv) => this.presenter.toJSON(rdv))
   }
