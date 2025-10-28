@@ -8,10 +8,10 @@ export default class TimeSlot extends BaseModel {
   declare id: number
 
   @column()
-  declare startTime: number
+  declare startTime: string
 
   @column()
-  declare endTime: number
+  declare endTime: string
 
   @column.dateTime()
   declare dateAt: DateTime

@@ -12,7 +12,8 @@ export default class extends BaseSchema {
       table.boolean('state').notNullable()
       table.boolean('is_archived').notNullable()
       table.text('description').nullable()
-      table.string('creneau').nullable()
+      table.string('start').nullable()
+      table.string('end').nullable()
       table.enu('type', ['contact', 'installation'], {
         useNative: true,
         enumName: 'rdvs_type',

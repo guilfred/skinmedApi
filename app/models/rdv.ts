@@ -18,7 +18,10 @@ export default class Rdv extends BaseModel {
   declare rdvAt: DateTime
 
   @column()
-  declare creneau: string | null
+  declare start: string | null
+
+  @column()
+  declare end: string | null
 
   @column({ columnName: 'client_id' })
   declare clientId: number

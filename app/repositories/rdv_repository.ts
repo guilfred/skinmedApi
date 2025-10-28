@@ -51,4 +51,15 @@ export class RdvRepository {
       .preload('user')
       .preload('agent')
   }
+
+  public async getRdvsAllAgents() {
+    return await Rdv.query()
+      .where('isArchived', false)
+      .whereHas('agent', (agentQuery) => {
+        agentQuery.where('role', ROLE.AGENT)
+      })
+      .preload('client')
+      .preload('user')
+      .preload('agent')
+  }
 }

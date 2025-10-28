@@ -65,6 +65,16 @@ export default class RdvAgentController {
     return rdvs.map((rdv) => this.presenter.toJSON(rdv))
   }
 
+  async getRdvsAllAgent({ auth, response }: HttpContext) {
+    const user = auth.user
+    if (!user) {
+      return response.status(401).send('Requires authentication')
+    }
+    const rdvs = await this.repository.getRdvsAllAgents()
+
+    return rdvs.map((rdv) => this.presenter.toJSON(rdv))
+  }
+
   async editRdvByAgent({ auth, response, request }: HttpContext) {
     const user = auth.user
     if (!user) {
@@ -100,7 +110,7 @@ export default class RdvAgentController {
     if (!user) {
       return response.status(401).send('Requires authentication')
     }
-    const { at, description, creneau, clientId } = await request.validateUsing(
+    const { at, description, start, end, clientId } = await request.validateUsing(
       createRdvInstallationValidator
     )
 
@@ -113,7 +123,8 @@ export default class RdvAgentController {
     rdvInstance.type = 'installation'
     rdvInstance.title = client.rs
     rdvInstance.description = description
-    rdvInstance.creneau = creneau
+    rdvInstance.start = start
+    rdvInstance.end = end
     rdvInstance.agentId = user.id
     rdvInstance.userId = user.id
     await rdvInstance.save()
@@ -140,7 +151,7 @@ export default class RdvAgentController {
       .preload('agent')
       .preload('user')
       .firstOrFail()
-    const { at, description, creneau, clientId } = await request.validateUsing(
+    const { at, description, start, end, clientId } = await request.validateUsing(
       createRdvInstallationValidator
     )
 
@@ -148,7 +159,8 @@ export default class RdvAgentController {
       .merge({
         rdvAt: DateTime.fromJSDate(at),
         description: description,
-        creneau: creneau,
+        start: start,
+        end: end,
         clientId: clientId,
       })
       .save()
@@ -189,12 +201,13 @@ export default class RdvAgentController {
       .preload('user')
       .firstOrFail()
 
-    const { rdvAt, creneau } = await request.validateUsing(UpdateRdvAtValidator)
+    const { rdvAt, start, end } = await request.validateUsing(UpdateRdvAtValidator)
     const dateAt = DateTime.fromJSDate(rdvAt)
     await rdv
       .merge({
         rdvAt: dateAt,
-        creneau: creneau,
+        start: start,
+        end: end,
         title: `Rendez-vous d'installation pour le ${dateAt}`,
       })
       .save()
@@ -216,8 +229,8 @@ export default class RdvAgentController {
       .preload('user')
       .firstOrFail()
 
-    const { creneau } = await request.validateUsing(UpdateCreneauValidator)
-    await rdv.merge({ creneau: creneau }).save()
+    const { start, end } = await request.validateUsing(UpdateCreneauValidator)
+    await rdv.merge({ start: start, end: end }).save()
 
     return response.status(200).json(this.presenter.toJSON(rdv))
   }

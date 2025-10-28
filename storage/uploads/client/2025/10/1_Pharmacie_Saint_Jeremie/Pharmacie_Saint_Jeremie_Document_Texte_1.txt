@@ -1,0 +1,42 @@
+===== Points à corriger 
+--> Ajouter la prise de rendez-vous pour toute l'équipe skinmed comme pour un télévendeur. 
+--> 
+
+--> Le client s'affiche que si l'installation a été faite par le "chargé de dév"
+
+
+
+--> Afficher les barres de recherches sur les pages: 
+	- 
+
+ajouter deux boutons radio pour les actions sur l'agenda du chargé de dev 
+griser les samedis sur tous les calndrier 
+===== Points à ajouter 
+
+--> Ajouter un bouton "intéressé" ou "pas intéressé" sur la fiche client, le calendrier et d'autres vues pour les comptes utilisateurs 
+--> Ajouter un calendrier du "chargé de dév" à l'étape 3 
+-> Ajouter un commentaire client intéressé ou pas 
+-> permettre pour le chargé de dév la sélection d'une plage horaire pour informer de son indisponibilité 
+--> ajouté un statut pour le cas de l'installation ou de rdv client 
+
+Rendez-vous pour la vente ==> client 
+ DE 3100 FSP 320 
+ 
+
+
+Chargé de dev 
+Menu
+1 Agenda
+
+terminer la vue  de Armel 
+
+1- Suppression du samedi et dimanche sur chaque calendrier 
+2- Ajout des infos DE FSP dans les informations contractuelles du client (il reste à l'ajouter dans la facture)
+3- Déplacer les champs non requis dans l'étape 4 sauf le téléphone fixe et portable 
+4- ajouter le département à la place du code postal deux chiffres 
+5-  Rajouter un champ date sur le card du rdv dans le calendrier rdv des agents
+6- griser les samedis sur tous les calendrier, j'ai préféré les supprimer
+
+
+
+

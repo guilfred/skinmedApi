@@ -20,6 +20,7 @@ export class ClientDto {
       phonePortable: client.phonePortable || null,
       department: client.department,
       rs: client.rs,
+      signed: client.signEd,
       siren: client.siren || null,
       rpps: client.rpps || null,
       ville: client.ville || null,
@@ -52,16 +53,19 @@ export class ClientDto {
               type: rdv.type,
               description: rdv.description,
               title: rdv.title,
-              creneau: rdv.creneau,
-              agent: {
-                id: rdv.agent.id,
-                name: rdv.agent.name,
-                firstname: rdv.agent.firstname,
-                cp: rdv.agent.codePostal || null,
-                ville: rdv.agent.ville || null,
-                address: rdv.agent.address || null,
-                phone: rdv.agent.phone || null,
-              },
+              start: rdv.start,
+              end: rdv.end,
+              agent: rdv.agent
+                ? {
+                    id: rdv.agent.id,
+                    name: rdv.agent.name,
+                    firstname: rdv.agent.firstname,
+                    cp: rdv.agent.codePostal || null,
+                    ville: rdv.agent.ville || null,
+                    address: rdv.agent.address || null,
+                    phone: rdv.agent.phone || null,
+                  }
+                : null,
             }
           })
         : [],

@@ -8,6 +8,12 @@ export const CheckClientIDValidator = vine.compile(
   })
 )
 
+export const UpdateContratSignedValidator = vine.compile(
+  vine.object({
+    signed: vine.boolean(),
+  })
+)
+
 export const EditClientContratDataValidator = vine.compile(
   vine.object({
     siren: vine.string().trim().nullable(),

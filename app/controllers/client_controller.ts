@@ -7,6 +7,7 @@ import {
   EditClientContratDataValidator,
   EditPreClientValidator,
   scanFilesClientValidator,
+  UpdateContratSignedValidator,
 } from '#validators/client_validator'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -217,6 +218,24 @@ export default class ClientController {
     client.financeurId = financeurId
     client.amount = financeur.amount
     await client.save()
+
+    return response.status(200).json(this.presenter.toJSON(client))
+  }
+
+  async setContratSigned({ auth, request, response }: HttpContext) {
+    const user = auth.user
+    if (!user) {
+      return response.status(401).send('Requires authentication')
+    }
+    const { params } = await request.validateUsing(CheckClientIDValidator)
+    const client = await Client.query()
+      .where('id', params.id)
+      .preload('financeur')
+      .preload('rdvs')
+      .firstOrFail()
+
+    const { signed } = await request.validateUsing(UpdateContratSignedValidator)
+    await client.merge({ signEd: signed }).save()
 
     return response.status(200).json(this.presenter.toJSON(client))
   }

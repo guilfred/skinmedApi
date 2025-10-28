@@ -6,14 +6,16 @@ export const createRdvInstallationValidator = vine.compile(
       formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
     }),
     description: vine.string().trim().nullable(),
-    creneau: vine.string().trim(),
+    start: vine.string().trim(),
+    end: vine.string().trim(),
     clientId: vine.number().withoutDecimals().positive(),
   })
 )
 
 export const UpdateCreneauValidator = vine.compile(
   vine.object({
-    creneau: vine.string().trim(),
+    start: vine.string().trim(),
+    end: vine.string().trim(),
     agentId: vine.number().withoutDecimals().positive(),
     isArchived: vine.boolean(),
   })

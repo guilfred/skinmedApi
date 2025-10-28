@@ -53,13 +53,15 @@ export const UpdateRdvAtValidator = vine.compile(
     rdvAt: vine.date({
       formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
     }),
-    creneau: vine.string().trim(),
+    start: vine.string().trim(),
+    end: vine.string().trim(),
   })
 )
 
 export const UpdateCrenauAndProfileAgentValidator = vine.compile(
   vine.object({
-    creneau: vine.string().trim(),
+    start: vine.string().trim(),
+    end: vine.string().trim(),
     agentId: vine.number().withoutDecimals().positive(),
     isArchived: vine.boolean(),
     at: vine.date({
@@ -96,7 +98,8 @@ export const createRdvFromClientAgentAttachValidator = vine.compile(
       }),
       title: vine.string().trim(),
       description: vine.string().trim().nullable(),
-      creneau: vine.string().trim(),
+      start: vine.string().trim(),
+      end: vine.string().trim(),
     }),
     agentId: vine.number().withoutDecimals().positive(),
   })

@@ -59,9 +59,9 @@ export default class RdvClientController {
       .preload('user')
       .firstOrFail()
 
-    const { rdvAt, creneau } = await request.validateUsing(UpdateRdvAtValidator)
+    const { rdvAt, start, end } = await request.validateUsing(UpdateRdvAtValidator)
     if (!rdv.state) {
-      await rdv.merge({ rdvAt: DateTime.fromJSDate(rdvAt), creneau: creneau }).save()
+      await rdv.merge({ rdvAt: DateTime.fromJSDate(rdvAt), start: start, end: end }).save()
     }
 
     return response.status(200).json(this.presenter.toJSON(rdv))
@@ -81,12 +81,13 @@ export default class RdvClientController {
       .preload('user')
       .firstOrFail()
 
-    const { agentId, creneau, isArchived, at } = await request.validateUsing(
+    const { agentId, start, end, isArchived, at } = await request.validateUsing(
       UpdateCrenauAndProfileAgentValidator
     )
     await rdv
       .merge({
-        creneau: creneau,
+        start: start,
+        end: end,
         agentId: agentId,
         isArchived: isArchived,
         rdvAt: DateTime.fromJSDate(at),
@@ -160,7 +161,8 @@ export default class RdvClientController {
     rdvInstance.type = 'contact'
     rdvInstance.title = rdv.title
     rdvInstance.description = rdv.description
-    rdvInstance.creneau = rdv.creneau
+    rdvInstance.start = rdv.start
+    rdvInstance.end = rdv.end
     rdvInstance.agentId = agentId
     rdvInstance.userId = user.id
     await rdvInstance.save()

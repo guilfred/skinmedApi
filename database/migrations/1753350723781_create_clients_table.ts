@@ -30,6 +30,7 @@ export default class extends BaseSchema {
       table.timestamp('birth_at').nullable()
       table.string('birth_place').nullable()
       table.boolean('e_sign').nullable()
+      table.boolean('sign_ed')
       table.boolean('interested').notNullable()
       table.json('files').nullable()
       table.integer('financeur_id').nullable().unsigned().references('financeurs.id')

@@ -22,22 +22,6 @@ export default class BookingController {
       return response.status(401).send('Requires authentication')
     }
     const { at, agentId } = await request.validateUsing(CheckAvailableDateValidator)
-    const allSlots = [
-      '07-08',
-      '08-09',
-      '09-10',
-      '10-11',
-      '11-12',
-      '12-13',
-      '13-14',
-      '14-15',
-      '15-16',
-      '16-17',
-      '17-18',
-      '18-19',
-      '19-20',
-      '20-21',
-    ]
 
     const booked = agentId
       ? await TimeSlot.query().where('date_at', at).andWhere('user_id', agentId)
@@ -47,14 +31,14 @@ export default class BookingController {
       const startTime = formatTimeSlot(r.startTime)
       const endTime = formatTimeSlot(r.endTime)
 
-      return `${startTime}-${endTime}`
+      return {
+        at: DateTime.fromJSDate(at).toFormat('yyyy-MM-dd'),
+        start: startTime,
+        end: endTime,
+      }
     })
-    //return booked
-    // On retourne tout avec un statut
-    return allSlots.map((slot) => ({
-      slot,
-      status: bookedSlots.includes(slot) ? 'réservé' : 'disponible',
-    }))
+
+    return bookedSlots
   }
 
   async store({ auth, response, request }: HttpContext) {
@@ -101,7 +85,7 @@ export default class BookingController {
     timeSlot.userId = agentId || user.id
     await timeSlot.save()
 
-    return response.status(200).send('Ce créneau est libre !')
+    return response.status(200).send(`Mise à jour de crénau horaire pour le ${at} !`)
   }
 
   async detachFromDrop({ auth, response, request }: HttpContext) {

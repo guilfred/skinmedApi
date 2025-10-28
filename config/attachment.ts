@@ -12,6 +12,7 @@ const attachmentConfig = defineConfig({
       },
     },
   },
+  rename: false,
 })
 
 export default attachmentConfig

@@ -34,6 +34,9 @@ export default class Client extends BaseModel {
   @column.dateTime()
   declare signAt: DateTime | null
 
+  @column({ columnName: 'sign_ed' })
+  declare signEd: boolean
+
   @column()
   declare name: string
 
@@ -99,6 +102,11 @@ export default class Client extends BaseModel {
 
   @column()
   declare financeurId: number | null
+
+  constructor() {
+    super()
+    this.signEd = false
+  }
 
   @belongsTo(() => Financeur)
   declare financeur: BelongsTo<typeof Financeur>

@@ -6,7 +6,7 @@ export function formatCp(num: string) {
   return numeric.toString().padStart(num.length, '0')
 }
 
-export const formatTimeSlot = (time: number): string => {
+export const formatTimeSlot = (time: string): string => {
   if (time.toString().length === 1) {
     return time.toString().padStart(2, '0')
   }

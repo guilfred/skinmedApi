@@ -2,8 +2,8 @@ import vine from '@vinejs/vine'
 
 export const CreateBookingValidator = vine.compile(
   vine.object({
-    start_time: vine.number().withoutDecimals().positive(),
-    end_time: vine.number().withoutDecimals().positive(),
+    start_time: vine.string(),
+    end_time: vine.string(),
     at: vine.date({
       formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
     }),
@@ -30,10 +30,10 @@ export const CheckAvailableDateValidator = vine.compile(
 
 export const DetachBookingValidator = vine.compile(
   vine.object({
-    start: vine.number().withoutDecimals().positive(),
-    end: vine.number().withoutDecimals().positive(),
-    new_start: vine.number().withoutDecimals().positive(),
-    new_end: vine.number().withoutDecimals().positive(),
+    start: vine.string(),
+    end: vine.string(),
+    new_start: vine.string(),
+    new_end: vine.string(),
     at: vine.date({
       formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
     }),
@@ -43,10 +43,10 @@ export const DetachBookingValidator = vine.compile(
 
 export const DetachFromDropBookingValidator = vine.compile(
   vine.object({
-    start: vine.number().withoutDecimals().positive(),
-    end: vine.number().withoutDecimals().positive(),
-    new_start: vine.number().withoutDecimals().positive(),
-    new_end: vine.number().withoutDecimals().positive(),
+    start: vine.string(),
+    end: vine.string(),
+    new_start: vine.string(),
+    new_end: vine.string(),
     oldAt: vine.date({
       formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
     }),
@@ -59,8 +59,8 @@ export const DetachFromDropBookingValidator = vine.compile(
 
 export const UnlikeBookingValidator = vine.compile(
   vine.object({
-    start: vine.number().withoutDecimals().positive(),
-    end: vine.number().withoutDecimals().positive(),
+    start: vine.string(),
+    end: vine.string(),
     at: vine.date({
       formats: ['DD-MM-YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD'],
     }),
